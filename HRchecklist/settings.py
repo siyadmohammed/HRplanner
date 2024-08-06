@@ -74,19 +74,15 @@ WSGI_APPLICATION = 'HRchecklist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Default local database configuration (for development)
-import dj_database_url
+
 
 # Read the DATABASE_URL from the environment
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,  # Keep connections open for up to 10 minutes
-        ssl_require=True  # Use SSL for the connection
-    )
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -124,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -144,3 +140,8 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_IMPORTS = ('HRoperations.tasks',)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://hrpeopleplanner.onrender.com',
+]
