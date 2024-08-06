@@ -74,6 +74,13 @@ WSGI_APPLICATION = 'HRchecklist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+<<<<<<< HEAD
+=======
+
+
+# Read the DATABASE_URL from the environment
+DATABASE_URL = os.getenv('DATABASE_URL')
+>>>>>>> 9f665720220a61cf8ef42529b33f8b3936376f1f
 
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
