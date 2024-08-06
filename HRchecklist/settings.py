@@ -75,13 +75,35 @@ WSGI_APPLICATION = 'HRchecklist.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-# Read the DATABASE_URL from the environment
+import os
+from django.core.exceptions import ImproperlyConfigured
+import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Default database settings for local development
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'your_local_db_name'),
+        'USER': os.getenv('DB_USER', 'your_local_db_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'your_local_db_password'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+    }
+}
+
+# Override database settings with DATABASE_URL if available
 DATABASE_URL = os.getenv('DATABASE_URL')
 
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+elif not DATABASE_URL and not all(value for value in DATABASES['default'].values()):
+    raise ImproperlyConfigured("DATABASE_URL environment variable not set and no local database configuration provided")
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -140,7 +162,6 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_IMPORTS = ('HRoperations.tasks',)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 CSRF_TRUSTED_ORIGINS = [
     'https://hrpeopleplanner.onrender.com',
