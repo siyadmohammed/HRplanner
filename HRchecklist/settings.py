@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +28,7 @@ SECRET_KEY = 'django-insecure-j9v4%ylm*&6t*%@^xy2_0gkild#p)ta145y=du555#85gjgthh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hrpeopleplanner.onrender.com']
+ALLOWED_HOSTS = ['hrpeopleplanner.onrender.com','127.0.0.1']
 
 # Application definition
 
@@ -75,12 +77,6 @@ WSGI_APPLICATION = 'HRchecklist.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-import os
-from django.core.exceptions import ImproperlyConfigured
-import dj_database_url
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
 load_dotenv()
 
 # Default database settings for local development
@@ -102,7 +98,6 @@ if DATABASE_URL:
     DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 elif not DATABASE_URL and not all(value for value in DATABASES['default'].values()):
     raise ImproperlyConfigured("DATABASE_URL environment variable not set and no local database configuration provided")
-
 
 
 # Password validation
