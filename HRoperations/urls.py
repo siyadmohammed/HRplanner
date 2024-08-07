@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.signin, name='signin'),
+    path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
     path('add_employee/', views.add_employee, name='add_employee'),
     path('generate_filled_pdf/<int:employee_id>/', views.generate_filled_pdf, name='generate_filled_pdf'),
@@ -13,7 +14,3 @@ urlpatterns = [
     path('delete_employee/', views.delete_employee, name='delete_employee'),
 
 ]
-
-
-
-
