@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from django.contrib.auth import authenticate
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 import fitz  # PyMuPDF
 from django.utils import timezone
@@ -82,6 +83,7 @@ def signout(request):
         return redirect("/")
 
 
+@login_required
 def add_employee(request):
     notifications = notify()
     if request.method == 'POST':
@@ -128,7 +130,6 @@ def generate_filled_pdf(request, employee_id):
 
         # Fill in the details with specific coordinates
         page.insert_text((115, 280), employee.first_name, fontsize=10)
-        page.insert_text((61, 102), employee.last_name, fontsize=10)
         page.insert_text((265, 339), employee.position, fontsize=10)
         page.insert_text((265, 387), employee.salary, fontsize=10)
         page.insert_text((115, 220), current_date, fontsize=10)
@@ -152,7 +153,7 @@ def check_email(request):
     }
     return JsonResponse(data)
 
-
+@login_required
 def send_email_view(request):
     notifications = notify()
 
@@ -182,7 +183,7 @@ def send_email_view(request):
     }
     return render(request, 'send_email.html', context)
 
-
+@login_required
 def employee_list(request):
     notifications = notify()
     employees = Employee.objects.all()
