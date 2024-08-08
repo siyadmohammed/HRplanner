@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-j9v4%ylm*&6t*%@^xy2_0gkild#p)ta145y=du555#85gjgthh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hrpeopleplanner.onrender.com','127.0.0.1']
+ALLOWED_HOSTS = ['hrplanner.onrender.com','127.0.0.1']
 
 # Application definition
 
@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'HRoperations'
 ]
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,24 +84,8 @@ load_dotenv()
 
 # Default database settings for local development
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'your_local_db_name'),
-        'USER': os.getenv('DB_USER', 'your_local_db_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'your_local_db_password'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.parse('postgres://ziyadmhd:1x8U0bt1SJqcevQAxD8IB70GAPYLmfY8@dpg-cqq7d2l6l47c73ap71bg-a:5432/hrpostdb', conn_max_age=600)
 }
-
-# Override database settings with DATABASE_URL if available
-DATABASE_URL = os.getenv('DATABASE_URL')
-
-if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-elif not DATABASE_URL and not all(value for value in DATABASES['default'].values()):
-    raise ImproperlyConfigured("DATABASE_URL environment variable not set and no local database configuration provided")
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
