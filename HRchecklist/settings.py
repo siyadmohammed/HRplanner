@@ -146,5 +146,5 @@ CELERY_IMPORTS = ('HRoperations.tasks',)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://hrpeopleplanner.onrender.com',
+    'https://hrplanner.onrender.com',
 ]
