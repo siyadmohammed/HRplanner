@@ -121,7 +121,7 @@ def generate_filled_pdf(request, employee_id):
     try:
         employee = Employee.objects.get(id=employee_id)
         current_date = timezone.now().strftime('%B %d, %Y')  # Format as 'Month Day, Year'
-        pdf_path = r'D:\purpose.D drive\Hr checklist app\HRchecklist\templates\Offerletter.pdf'
+        pdf_path = r'static/Offerletter.pdf'
         output_path = f'static\offer_letter_{employee_id}.pdf'
         pdf_document = fitz.open(pdf_path)
         page = pdf_document[0]
