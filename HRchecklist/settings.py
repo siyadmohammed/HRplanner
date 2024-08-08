@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-j9v4%ylm*&6t*%@^xy2_0gkild#p)ta145y=du555#85gjgthh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hrplanner.onrender.com','127.0.0.1']
+ALLOWED_HOSTS = ['hrplanner.onrender.com', '127.0.0.1']
 
 # Application definition
 
@@ -41,9 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'HRoperations'
 ]
-
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,11 +77,16 @@ WSGI_APPLICATION = 'HRchecklist.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-load_dotenv()
-
-# Default database settings for local development
 DATABASES = {
-    'default': dj_database_url.parse('postgres://ziyadmhd:1x8U0bt1SJqcevQAxD8IB70GAPYLmfY8@dpg-cqq7d2l6l47c73ap71bg-a:5432/hrpostdb', conn_max_age=600)
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hrpostdb',
+        'USER': 'ziyadmhd',
+        'PASSWORD': '1x8U0bt1SJqcevQAxD8IB70GAPYLmfY8',
+        'HOST': 'dpg-cqq7d2l6l47c73ap71bg-a.singapore-postgres.render.com',
+        # Use the internal link here
+        'PORT': '5432',
+    }
 }
 
 # Password validation
